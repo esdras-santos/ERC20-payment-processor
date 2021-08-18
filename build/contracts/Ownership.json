@@ -45,7 +45,7 @@
   "sourceMap": "27:397:0:-:0;;;92:75;8:9:-1;5:2;;;30:1;27;20:12;5:2;92:75:0;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;92:75:0;;;;;;;;;;;;;;;;153:6;137:13;;:22;;;;;;;;;;;;;;;;;;92:75;27:397;;;;;;",
   "deployedSourceMap": "27:397:0:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;27:397:0;;;;;;;;;;;;;;;;;;;;;;;;327:94;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;175:144;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;175:144:0;;;;;;;;;;;;;;;;;;;:::i;:::-;;327:94;365:14;400:13;;;;;;;;;;;391:22;;327:94;:::o;175:144::-;261:13;;;;;;;;;;;247:27;;:10;:27;;;239:36;;;;;;302:9;286:13;;:25;;;;;;;;;;;;;;;;;;175:144;:::o",
   "source": "pragma solidity ^0.6.0;\r\n\r\ncontract Ownership{\r\n\r\n    address private contractOwner;\r\n\r\n    constructor(address _owner) public{\r\n        contractOwner = _owner;\r\n    }\r\n\r\n    function transferOwnership(address _newOwner) public {\r\n        require(msg.sender == contractOwner);\r\n        contractOwner = _newOwner;\r\n    }\r\n\r\n    function owner() public view returns (address owner_){\r\n        owner_ = contractOwner;\r\n    }\r\n}",
-  "sourcePath": "C:\\Users\\esdra\\Downloads\\paymentProcessor\\contracts\\Ownership.sol",
+  "sourcePath": "C:/Users/esdra/Downloads/paymentProcessor/contracts/Ownership.sol",
   "ast": {
     "absolutePath": "/C/Users/esdra/Downloads/paymentProcessor/contracts/Ownership.sol",
     "exportedSymbols": {
@@ -247,7 +247,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 531,
+                            "referencedDeclaration": 79,
                             "src": "247:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -301,10 +301,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        534,
-                        535
+                        82,
+                        83
                       ],
-                      "referencedDeclaration": 534,
+                      "referencedDeclaration": 82,
                       "src": "239:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -840,10 +840,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                534,
-                                535
+                                82,
+                                83
                               ],
-                              "referencedDeclaration": 534,
+                              "referencedDeclaration": 82,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -884,7 +884,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 531,
+                                      "referencedDeclaration": 79,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1130,7 +1130,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-08-18T12:10:17.253Z",
+  "updatedAt": "2021-08-18T13:33:35.136Z",
   "devdoc": {
     "methods": {}
   },

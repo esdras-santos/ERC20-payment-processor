@@ -32,6 +32,7 @@ contract PaymentProcessor is Ownership{
             _sellerBalance[_seller][_token] += sellerAmount;
             _ownerBalance[_token] += ownerAmount;
         } else{
+            require(_tokenAddress[_token] != address(0x00));
             require(_amount >= _productPrice);
             token = IERC20(_tokenAddress[_token]);
             (uint256 ownerAmount, uint256 sellerAmount) = percentage(_amount, percent);
@@ -50,29 +51,29 @@ contract PaymentProcessor is Ownership{
 
     function sellerWithdraw(uint256 _amount, string memory _token) public {
         require(_sellerBalance[msg.sender][_token] >= _amount);
+        _sellerBalance[msg.sender][_token] -= _amount;
         if(keccak256(abi.encodePacked((_token))) == keccak256(abi.encodePacked((string("ether"))))){
-            _sellerBalance[msg.sender][_token] -= _amount;
             (bool success, ) = msg.sender.call.value(_amount)("");
             require(success);
+        } else {
+            token = IERC20(_tokenAddress[_token]);
+            bool success = token.transfer(msg.sender,_amount);
+            require(success);
         }
-    
-        token = IERC20(_tokenAddress[_token]);
-        _sellerBalance[msg.sender][_token] -= _amount;
-        bool success = token.transfer(msg.sender,_amount);
-        require(success);
     }
 
     function ownerWithdraw(uint256 _amount, string memory _token) public onlyOwner{
         require(_ownerBalance[_token] >= _amount);
+        _ownerBalance[_token] -= _amount;
         if(keccak256(abi.encodePacked((_token))) == keccak256(abi.encodePacked((string("ether"))))){
             _ownerBalance[_token] -= _amount;
             (bool success, ) = owner().call.value(_amount)("");
             require(success);
+        } else {
+            token = IERC20(_tokenAddress[_token]);
+            bool success = token.transfer(owner(),_amount);
+            require(success);
         }
-        token = IERC20(_tokenAddress[_token]);
-        _ownerBalance[_token] -= _amount;
-        bool success = token.transfer(owner(),_amount);
-        require(success);
     }
 
     function ownerBalance(string memory _token) public view onlyOwner returns(uint256){
@@ -88,6 +89,7 @@ contract PaymentProcessor is Ownership{
         percent = newPercent;
     }
 
+    //safe math is needed for this function
     function percentage(uint256 _amount, uint256 _percent) internal pure returns(uint256,uint256){
         uint256 ownerAmount = (_percent * _amount) / 100;
         uint256 sellerAmount = _amount - ownerAmount;
