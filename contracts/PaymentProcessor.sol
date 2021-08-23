@@ -27,6 +27,7 @@ contract PaymentProcessor is Ownership{
     //pay for the product
     //NEED TO CONFIRM IF THE PRODUCT BELONG TO THE SELLER
     function pay(string memory _token,uint256 _amount,address _seller, uint256 _productPrice, uint256 _productId) public payable{
+        require(_seller != address(0x00))
         if (keccak256(abi.encodePacked((_token))) == keccak256(abi.encodePacked((string("ether"))))){
             require(msg.value >= _productPrice);
             (uint256 ownerAmount, uint256 sellerAmount) = percentage(msg.value, percent);
