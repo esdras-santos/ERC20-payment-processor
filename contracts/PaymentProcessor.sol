@@ -25,6 +25,7 @@ contract PaymentProcessor is Ownership{
     }
 
     //pay for the product
+    //NEED TO CONFIRM IF THE PRODUCT BELONG TO THE SELLER
     function pay(string memory _token,uint256 _amount,address _seller, uint256 _productPrice, uint256 _productId) public payable{
         if (keccak256(abi.encodePacked((_token))) == keccak256(abi.encodePacked((string("ether"))))){
             require(msg.value >= _productPrice);
@@ -57,8 +58,8 @@ contract PaymentProcessor is Ownership{
             require(success);
         } else {
             token = IERC20(_tokenAddress[_token]);
-            bool success = token.transfer(msg.sender,_amount);
-            require(success);
+            require(token.transfer(msg.sender,_amount));
+            
         }
     }
 
@@ -66,13 +67,11 @@ contract PaymentProcessor is Ownership{
         require(_ownerBalance[_token] >= _amount);
         _ownerBalance[_token] -= _amount;
         if(keccak256(abi.encodePacked((_token))) == keccak256(abi.encodePacked((string("ether"))))){
-            _ownerBalance[_token] -= _amount;
             (bool success, ) = owner().call.value(_amount)("");
             require(success);
         } else {
             token = IERC20(_tokenAddress[_token]);
-            bool success = token.transfer(owner(),_amount);
-            require(success);
+            require(token.transfer(owner(),_amount));
         }
     }
 
